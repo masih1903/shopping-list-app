@@ -117,40 +117,45 @@ function App() {
 
   // Render the application page
   return (
-    <div className="container">
-      {!loggedIn ? (
-        <button onClick={() => setShowLogin(true)} className="login-button">
-          Login
-        </button>
-      ) : (
-        <button onClick={logout} className="logout-button">
-          Log ud
-        </button>
-      )}
-      <div className="left-panel">
-        {loggedIn && (
-          <GoodsForm
-            blankGood={blankGood}
-            goodToEdit={goodToEdit}
-            mutateGood={mutateGood}
-            resetForm={resetForm}
-            isEditing={isEditing}
-          />
+    <div className="app-wrapper">
+      <div className="container">
+        {!loggedIn ? (
+          <button onClick={() => setShowLogin(true)} className="login-button">
+            Login
+          </button>
+        ) : (
+          <button onClick={logout} className="logout-button">
+            Log ud
+          </button>
         )}
-        <GoodsList
-          goods={goods}
-          deleteGoodById={deleteGoodById}
-          addToShoppingList={addToShoppingList}
-          loggedIn={loggedIn}
-          updateGood={updateGood} // Pass updateGood to handle edits
-        />
+        <div className="left-panel">
+          {loggedIn && (
+            <GoodsForm
+              blankGood={blankGood}
+              goodToEdit={goodToEdit}
+              mutateGood={mutateGood}
+              resetForm={resetForm}
+              isEditing={isEditing}
+            />
+          )}
+          <GoodsList
+            goods={goods}
+            deleteGoodById={deleteGoodById}
+            addToShoppingList={addToShoppingList}
+            loggedIn={loggedIn}
+            updateGood={updateGood} // Pass updateGood to handle edits
+          />
+        </div>
+        <div className="right-panel">
+          <ShoppingList
+            shoppings={shoppings}
+            deleteGoodFromShoppingListById={deleteGoodFromShoppingListById}
+          />
+        </div>
       </div>
-      <div className="right-panel">
-        <ShoppingList
-          shoppings={shoppings}
-          deleteGoodFromShoppingListById={deleteGoodFromShoppingListById}
-        />
-      </div>
+      <footer className="footer">
+        <p>© {new Date().getFullYear()} BaeTech. All rights reserved.</p>
+      </footer>
     </div>
   );
 }

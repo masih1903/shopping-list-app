@@ -1,18 +1,33 @@
 /* General Styles */
-body {
-  font-family: 'Roboto', sans-serif;
+html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
   background-color: #1e1e1e; /* Default background color */
   color: #eaeaea;
 }
 
+/* App Wrapper to Control Footer Position */
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 /* Container Layout */
 .container {
+  flex: 1; /* Allows the container to expand to push the footer down */
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin: 20px;
+  padding-bottom: 50px; /* Ensures content doesn't overlap the footer */
 }
 
 .left-panel {
@@ -48,6 +63,25 @@ h1 {
   margin-bottom: 1rem;
   color: #f39c12;
   text-align: center;
+}
+
+/* Footer Styles */
+.footer {
+  background-color: #2c2c2c;
+  color: #eaeaea;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed; /* Makes the footer stay at the very bottom of the viewport */
+  bottom: 0; /* Places the footer at the very bottom */
+  left: 0; /* Ensures it spans the full width */
+  width: 100%; /* Ensures it spans the full width */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Keeps it above other content */
+}
+
+.footer p {
+  margin: 0;
+  font-size: 0.9rem;
 }
 
 /* Form Styles */
@@ -157,13 +191,6 @@ button.edit:hover {
 /* Front Page Login Button (Green) */
 button.login-button {
   background-color: #2ecc71; /* Green */
-  color: #fff;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 button.login-button:hover {
@@ -173,13 +200,6 @@ button.login-button:hover {
 /* Logout Button */
 button.logout-button {
   background-color: #e74c3c; /* Red */
-  color: #fff;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 button.logout-button:hover {
