@@ -1,0 +1,312 @@
+/* General Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #1e1e1e; /* Default background color */
+  color: #eaeaea;
+}
+
+/* Container Layout */
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 20px;
+}
+
+.left-panel {
+  flex: 1;
+  margin-right: 20px;
+}
+
+/* Sticky shopping list on larger screens */
+.right-panel {
+  flex: 1;
+  max-width: 300px;
+  margin-left: auto;
+  text-align: left;
+  position: sticky;
+  top: 20px; /* Adjust based on how much space you want at the top */
+}
+
+/* Remove sticky behavior on smaller screens */
+@media (max-width: 768px) {
+  .right-panel {
+    position: static; /* Resets sticky behavior */
+    top: auto; /* Resets top spacing */
+  }
+}
+
+/* Panel Styles */
+div {
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #f39c12;
+  text-align: center;
+}
+
+/* Form Styles */
+form {
+  background: #2c2c2c;
+  border: 1px solid #444;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #f39c12;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  font-size: 1rem;
+  background-color: #3a3a3a;
+  color: #eaeaea;
+}
+
+/* General Button Styles */
+button {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: #fff; /* Ensures the text is always visible */
+}
+
+/* Save Button (Gem - Blue) */
+button.save {
+  background-color: #3498db; /* Blue */
+}
+
+button.save:hover {
+  background-color: #2980b9; /* Darker Blue */
+}
+
+/* Cancel Button (Annuller - Grey) */
+button.cancel {
+  background-color: #95a5a6; /* Grey */
+}
+
+button.cancel:hover {
+  background-color: #7f8c8d; /* Darker Grey */
+}
+
+/* Cancel Button inside Login Form */
+button.cancel-button {
+  background-color: #e74c3c; /* Red */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 15px; /* Adds spacing between Login and Cancel */
+  display: block; /* Ensures the button takes up its own row */
+  width: 100%; /* Matches the width of the form elements */
+  text-align: center;
+}
+
+button.cancel-button:hover {
+  background-color: #c0392b; /* Darker Red */
+}
+
+/* Delete Button (Slet - Red) */
+button.delete {
+  background-color: #e74c3c; /* Red */
+}
+
+button.delete:hover {
+  background-color: #c0392b; /* Darker Red */
+}
+
+/* Add to Cart Button (Tilføj til kurv - Green) */
+button.add-to-cart {
+  background-color: #2ecc71; /* Green */
+}
+
+button.add-to-cart:hover {
+  background-color: #27ae60; /* Darker Green */
+}
+
+/* Edit Button (Rediger - Orange) */
+button.edit {
+  background-color: #f39c12; /* Orange */
+}
+
+button.edit:hover {
+  background-color: #e67e22; /* Darker Orange */
+}
+
+/* Front Page Login Button (Green) */
+button.login-button {
+  background-color: #2ecc71; /* Green */
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.login-button:hover {
+  background-color: #27ae60; /* Darker Green */
+}
+
+/* Logout Button */
+button.logout-button {
+  background-color: #e74c3c; /* Red */
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.logout-button:hover {
+  background-color: #c0392b; /* Darker Red */
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background: #2c2c2c;
+  color: #eaeaea;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+table thead {
+  background-color: #444;
+}
+
+table th,
+table td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #555;
+}
+
+table tbody tr:hover {
+  background-color: #333;
+}
+
+/* Buttons in Tables */
+table button {
+  margin-right: 10px;
+}
+
+/* Login Form */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #1e1e1e; /* Matches the front page background */
+  padding: 20px;
+}
+
+.login-form {
+  background: #2c2c2c;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.login-form h2 {
+  margin-bottom: 20px;
+  color: #f39c12;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.login-form input {
+  width: calc(100% - 20px);
+  margin: 10px 0;
+  padding: 12px 10px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #333;
+  color: #eaeaea;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.login-form input:focus {
+  border-color: #f39c12;
+}
+
+button.login-submit-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #2ecc71;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button.login-submit-button:hover {
+  background-color: #27ae60;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column-reverse;
+  }
+
+  .right-panel,
+  .left-panel {
+    margin: 0;
+  }
+
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  table th,
+  table td {
+    padding: 8px;
+  }
+
+  .login-container {
+    padding: 10px;
+  }
+
+  .login-form {
+    padding: 20px;
+  }
+
+  .login-form h2 {
+    font-size: 1.5rem;
+  }
+}

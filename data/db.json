@@ -1,0 +1,201 @@
+{
+  "goods": [
+    {
+      "id": "1",
+      "name": "Mælk"
+    },
+    {
+      "id": "2",
+      "name": "Yoghurt"
+    },
+    {
+      "id": "3",
+      "name": "Creme fraiche"
+    },
+    {
+      "id": "4",
+      "name": "Skyr"
+    },
+    {
+      "id": "5",
+      "name": "Proteindrik"
+    },
+    {
+      "id": "6",
+      "name": "Ost"
+    },
+    {
+      "id": "7",
+      "name": "Agurker"
+    },
+    {
+      "id": "8",
+      "name": "Tomater"
+    },
+    {
+      "id": "9",
+      "name": "Peberfrugt"
+    },
+    {
+      "id": "10",
+      "name": "Løg"
+    },
+    {
+      "id": "11",
+      "name": "Hvidløg"
+    },
+    {
+      "id": "12",
+      "name": "Spidskål"
+    },
+    {
+      "id": "13",
+      "name": "Blomkål"
+    },
+    {
+      "id": "14",
+      "name": "Broccoli"
+    },
+    {
+      "id": "15",
+      "name": "Champignon"
+    },
+    {
+      "id": "16",
+      "name": "Kartofler"
+    },
+    {
+      "id": "17",
+      "name": "Gulerødder"
+    },
+    {
+      "id": "18",
+      "name": "Æbler"
+    },
+    {
+      "id": "19",
+      "name": "Appelsiner"
+    },
+    {
+      "id": "20",
+      "name": "Citroner"
+    },
+    {
+      "id": "21",
+      "name": "Meloner"
+    },
+    {
+      "id": "22",
+      "name": "Bananer"
+    },
+    {
+      "id": "23",
+      "name": "Rugbrød"
+    },
+    {
+      "id": "24",
+      "name": "Pasta"
+    },
+    {
+      "id": "25",
+      "name": "Ris"
+    },
+    {
+      "id": "26",
+      "name": "Linser"
+    },
+    {
+      "id": "27",
+      "name": "Havregryn"
+    },
+    {
+      "id": "28",
+      "name": "Kikærter"
+    },
+    {
+      "id": "29",
+      "name": "Kidney bønner"
+    },
+    {
+      "id": "30",
+      "name": "Kaffe"
+    },
+    {
+      "id": "31",
+      "name": "Tofu"
+    },
+    {
+      "id": "32",
+      "name": "Mandler"
+    },
+    {
+      "id": "33",
+      "name": "Valnødder"
+    },
+    {
+      "id": "34",
+      "name": "Dipmix"
+    },
+    {
+      "id": "35",
+      "name": "Chili nuts"
+    },
+    {
+      "id": "36",
+      "name": "Chips"
+    },
+    {
+      "id": "37",
+      "name": "Slik"
+    },
+    {
+      "id": "38",
+      "name": "Mørk chokolade"
+    },
+    {
+      "id": "39",
+      "name": "Salt"
+    },
+    {
+      "id": "40",
+      "name": "Peber"
+    },
+    {
+      "id": "41",
+      "name": "Mayonnaise"
+    },
+    {
+      "id": "42",
+      "name": "Chili"
+    },
+    {
+      "id": "43",
+      "name": "Dressing"
+    },
+    {
+      "id": "44",
+      "name": "Tun"
+    },
+    {
+      "id": "45",
+      "name": "Toiletpapir"
+    },
+    {
+      "id": "46",
+      "name": "Æg"
+    },
+    {
+      "id": "47",
+      "name": "Smør"
+    },
+    {
+      "id": "48",
+      "name": "Opvaskemiddel"
+    },
+    {
+      "id": "49",
+      "name": "Hytteost"
+    }
+  ],
+  "shoppinglist": []
+}
