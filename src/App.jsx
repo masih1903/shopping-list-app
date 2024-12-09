@@ -118,6 +118,13 @@ function App() {
   // Render the application page
   return (
     <div className="app-wrapper">
+      <img
+  src="baetech.png"
+  alt="Logo"
+  style={{ width: "350px", height: "auto", display: "block", margin: "0 auto" }}
+/>
+
+
       <div className="container">
         {!loggedIn ? (
           <button onClick={() => setShowLogin(true)} className="login-button">
@@ -154,7 +161,7 @@ function App() {
         </div>
       </div>
       <footer className="footer">
-        <p>© {new Date().getFullYear()} BaeTech. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} baeTech. All rights reserved.</p>
       </footer>
     </div>
   );

@@ -15,6 +15,11 @@ function LogIn({ login, onCancel }) {
 
   return (
     <div className="login-form">
+       <img
+  src="baetech.png"
+  alt="Logo"
+  style={{ width: "350px", height: "auto", display: "block", margin: "0 auto" }}
+/>
       <h2>Log på</h2>
       <form onSubmit={performLogin}>
         <input

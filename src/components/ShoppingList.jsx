@@ -5,6 +5,7 @@ function ShoppingList({ shoppings, deleteGoodFromShoppingListById }) {
       <table>
         <thead>
           <tr>
+            <th>Id</th>
             <th>Navn</th>
             <th>Aktivitet</th>
           </tr>
@@ -12,6 +13,7 @@ function ShoppingList({ shoppings, deleteGoodFromShoppingListById }) {
         <tbody>
           {shoppings.map((shop) => (
             <tr key={shop.id}>
+              <td>{shop.id}</td>
               <td>{shop.name}</td>
               <td>
                 <button
