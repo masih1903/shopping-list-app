@@ -16,7 +16,7 @@ function LogIn({ login, onCancel }) {
   return (
     <div className="login-form">
        <img
-  src="baetech.png"
+  src="baeTechTransparentRedSmall.png"
   alt="Logo"
   style={{ width: "350px", height: "auto", display: "block", margin: "0 auto" }}
 />
