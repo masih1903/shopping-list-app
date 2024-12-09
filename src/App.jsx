@@ -119,7 +119,7 @@ function App() {
   return (
     <div className="app-wrapper">
       <img
-  src="baeTechTransparentRed.png"
+  src="baeTechTransparentRedSmall.png"
   alt="Logo"
   style={{ width: "350px", height: "auto", display: "block", margin: "0 auto" }}
 />
