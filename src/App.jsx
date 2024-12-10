@@ -51,9 +51,7 @@ function App() {
   const addToShoppingList = (good) => {
     facade
       .fetchData("shoppinglists", "POST", good)
-      .then((newShoppingItem) =>
-        setShoppings([...shoppings, newShoppingItem])
-      )
+      .then((newShoppingItem) => setShoppings([...shoppings, newShoppingItem]))
       .catch((err) => console.error("Failed to add to shopping list:", err));
   };
 
@@ -63,7 +61,9 @@ function App() {
       .then(() =>
         setShoppings(shoppings.filter((shopping) => shopping.id !== goodId))
       )
-      .catch((err) => console.error("Failed to delete from shopping list:", err));
+      .catch((err) =>
+        console.error("Failed to delete from shopping list:", err)
+      );
   };
 
   const deleteGoodById = (goodId) => {
@@ -119,11 +119,15 @@ function App() {
   return (
     <div className="app-wrapper">
       <img
-  src="baeTechTransparentRedSmall.png"
-  alt="Logo"
-  style={{ width: "350px", height: "auto", display: "block", margin: "0 auto" }}
-/>
-
+        src="baeTechTransparentRedSmall.png"
+        alt="Logo"
+        style={{
+          width: "350px",
+          height: "auto",
+          display: "block",
+          margin: "0 auto",
+        }}
+      />
 
       <div className="container">
         {!loggedIn ? (

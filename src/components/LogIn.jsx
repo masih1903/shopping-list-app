@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 
 function LogIn({ login, onCancel }) {
-  const [credentials, setCredentials] = useState({ username: "", password: "" });
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
 
   const performLogin = (evt) => {
     evt.preventDefault();
@@ -15,11 +18,16 @@ function LogIn({ login, onCancel }) {
 
   return (
     <div className="login-form">
-       <img
-  src="baeTechTransparentRedSmall.png"
-  alt="Logo"
-  style={{ width: "350px", height: "auto", display: "block", margin: "0 auto" }}
-/>
+      <img
+        src="baeTechTransparentRedSmall.png"
+        alt="Logo"
+        style={{
+          width: "350px",
+          height: "auto",
+          display: "block",
+          margin: "0 auto",
+        }}
+      />
       <h2>Log på</h2>
       <form onSubmit={performLogin}>
         <input

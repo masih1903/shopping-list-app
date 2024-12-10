@@ -21,11 +21,29 @@ function apiFacade() {
   const logout = () => localStorage.removeItem("jwtToken");
   const loggedIn = () => getToken() != null;
 
+  const getUserRoles = () => {
+    const token = getToken();
+    if (token != null) {
+      const payloadBase64 = getToken().split(".")[1];
+      const decodedClaims = JSON.parse(window.atob(payloadBase64));
+      const roles = decodedClaims.roles;
+      return roles;
+    } else return "";
+  };
+
+  const hasUserAccess = (neededRole, loggedIn) => {
+    const roles = getUserRoles().split(",");
+    return loggedIn && roles.includes(neededRole);
+  };
+
   const login = (username, password) => {
     const options = makeOptions("POST", false, { username, password }); // Adjust if backend expects different keys
-    return fetch(`${URL}/auth/login`, options).then(handleHttpErrors);
+    return fetch(`${URL}/auth/login`, options)
+      .then(handleHttpErrors)
+      .then((res) => {
+        setToken(res.token);
+      });
   };
-  
 
   const fetchData = (endpoint, method = "GET", body = null) => {
     const options = makeOptions(method, true, body);
@@ -49,7 +67,15 @@ function apiFacade() {
     return opts;
   };
 
-  return { login, logout, fetchData, loggedIn };
+  return {
+    login,
+    logout,
+    fetchData,
+    loggedIn,
+    getToken,
+    setToken,
+    hasUserAccess,
+  };
 }
 
 const facade = apiFacade();

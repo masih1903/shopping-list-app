@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 
-function GoodsList({ goods, deleteGoodById, addToShoppingList, loggedIn, updateGood }) {
+function GoodsList({
+  goods,
+  deleteGoodById,
+  addToShoppingList,
+  loggedIn,
+  updateGood,
+}) {
   const [editingId, setEditingId] = useState(null);
   const [editingValue, setEditingValue] = useState("");
 
@@ -21,7 +27,9 @@ function GoodsList({ goods, deleteGoodById, addToShoppingList, loggedIn, updateG
   };
 
   const confirmDelete = (goodId) => {
-    const isConfirmed = window.confirm("Er du sikker på, at du vil slette denne vare?");
+    const isConfirmed = window.confirm(
+      "Er du sikker på, at du vil slette denne vare?"
+    );
     if (isConfirmed) {
       deleteGoodById(goodId); // Proceed with deletion
     }
@@ -67,7 +75,10 @@ function GoodsList({ goods, deleteGoodById, addToShoppingList, loggedIn, updateG
                   <>
                     {loggedIn && (
                       <>
-                        <button onClick={() => startEditing(good)} className="edit">
+                        <button
+                          onClick={() => startEditing(good)}
+                          className="edit"
+                        >
                           Rediger
                         </button>
                         <button
@@ -78,7 +89,10 @@ function GoodsList({ goods, deleteGoodById, addToShoppingList, loggedIn, updateG
                         </button>
                       </>
                     )}
-                    <button onClick={() => addToShoppingList(good)} className="add-to-cart">
+                    <button
+                      onClick={() => addToShoppingList(good)}
+                      className="add-to-cart"
+                    >
                       Tilføj til kurv
                     </button>
                   </>
