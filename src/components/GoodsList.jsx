@@ -37,7 +37,7 @@ function GoodsList({
 
   return (
     <div>
-      <h1>At købe</h1>
+      <h1>Vareliste</h1>
       <table>
         <thead>
           <tr>

@@ -26,14 +26,14 @@ function GoodsForm({ goodToEdit, mutateGood, resetForm, isEditing }) {
 
   return (
     <div>
-      <h1>{isEditing ? "Tilføj varer" : "Tilføj varer"}</h1>
+      <h1>{isEditing ? "Tilføj vare" : "Tilføj vare"}</h1>
       <form onSubmit={handleSubmit}>
         <input id="id" type="hidden" value={good.id || ""} readOnly />
         <label htmlFor="name">Navn</label>
         <input
           id="name"
           type="text"
-          placeholder="Angiv varer"
+          placeholder="Angiv vare"
           value={good.name || ""}
           onChange={handleChange}
         />

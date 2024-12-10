@@ -1,13 +1,13 @@
 function ShoppingList({ shoppings, deleteGoodFromShoppingListById }) {
   return (
     <div>
-      <h1>Indkøbsliste</h1>
+      <h1>Indkøbskurv</h1>
       <table>
         <thead>
           <tr>
             <th>Id</th>
             <th>Navn</th>
-            <th>Aktivitet</th>
+            <th>Handlinger</th>
           </tr>
         </thead>
         <tbody>
