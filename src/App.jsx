@@ -5,6 +5,8 @@ import ShoppingList from "./components/ShoppingList";
 import LogIn from "./components/LogIn";
 import facade from "./utils/apiFacade";
 import "./styles/App.css";
+import LoginLogo from "./SvgComponent/LoginLogo";
+import LogOut from "./SvgComponent/LogOut";
 
 const blankGood = {
   id: "",
@@ -132,11 +134,12 @@ function App() {
       <div className="container">
         {!loggedIn ? (
           <button onClick={() => setShowLogin(true)} className="login-button">
-            Login
+            <LoginLogo />
           </button>
         ) : (
+          
           <button onClick={logout} className="logout-button">
-            Log ud
+            <LogOut />
           </button>
         )}
         <div className="left-panel">

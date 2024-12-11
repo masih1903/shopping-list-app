@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import PlusLogo from "../SvgComponent/PlusLogo";
+import ResetLogo from "../SvgComponent/ResetLogo";
 
 function GoodsForm({ goodToEdit, mutateGood, resetForm, isEditing }) {
   const [good, setGood] = useState({ id: "", name: "" });
@@ -38,10 +40,10 @@ function GoodsForm({ goodToEdit, mutateGood, resetForm, isEditing }) {
           onChange={handleChange}
         />
         <button className="add-to-cart" type="submit">
-          {isEditing ? "Opdater" : "Tilføj"}
+          {isEditing ? "Opdater" : <PlusLogo />} 
         </button>
         <button className="delete" type="button" onClick={handleReset}>
-          Nulstil
+          <ResetLogo />
         </button>
       </form>
     </div>

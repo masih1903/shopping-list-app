@@ -124,6 +124,15 @@ button {
   color: #fff; /* Ensures the text is always visible */
 }
 
+/* Add spacing between buttons in forms */
+form button {
+  margin-right: 10px; /* Adds spacing between buttons */
+}
+
+form button:last-child {
+  margin-right: 0; /* Ensures no extra margin on the last button */
+}
+
 /* Save Button (Gem - Blue) */
 button.save {
   background-color: #3498db; /* Blue */

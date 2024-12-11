@@ -1,4 +1,11 @@
 import React, { useState } from "react";
+import Shoppingcart from "../SvgComponent/Shoppingcart";
+import EditLogo from "../SvgComponent/EditLogo";
+import Trashcan from "../SvgComponent/Trashcan";
+import SaveLogo from "../SvgComponent/SaveLogo";
+import CancelLogo from "../SvgComponent/CancelLogo";
+
+
 
 function GoodsList({
   goods,
@@ -65,10 +72,10 @@ function GoodsList({
                 {editingId === good.id ? (
                   <>
                     <button onClick={() => saveEdit(good)} className="save">
-                      Gem
+                      <SaveLogo />
                     </button>
                     <button onClick={cancelEdit} className="cancel">
-                      Annuller
+                      <CancelLogo />
                     </button>
                   </>
                 ) : (
@@ -79,13 +86,13 @@ function GoodsList({
                           onClick={() => startEditing(good)}
                           className="edit"
                         >
-                          Rediger
+                          <EditLogo />
                         </button>
                         <button
                           onClick={() => confirmDelete(good.id)}
                           className="delete"
                         >
-                          Slet
+                          <Trashcan />
                         </button>
                       </>
                     )}
@@ -93,7 +100,7 @@ function GoodsList({
                       onClick={() => addToShoppingList(good)}
                       className="add-to-cart"
                     >
-                      Tilføj til kurv
+                      <Shoppingcart />
                     </button>
                   </>
                 )}

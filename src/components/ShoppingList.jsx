@@ -1,3 +1,5 @@
+import Trashcan from "../SvgComponent/Trashcan";
+
 function ShoppingList({ shoppings, deleteGoodFromShoppingListById }) {
   return (
     <div>
@@ -20,7 +22,7 @@ function ShoppingList({ shoppings, deleteGoodFromShoppingListById }) {
                   className="delete"
                   onClick={() => deleteGoodFromShoppingListById(shop.id)}
                 >
-                  Slet
+                  <Trashcan />
                 </button>
               </td>
             </tr>

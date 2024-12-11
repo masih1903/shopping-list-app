@@ -47,7 +47,7 @@ function LogIn({ login, onCancel }) {
           Log på
         </button>
         <button type="button" onClick={onCancel} className="cancel-button">
-          Annuller
+          Tilbage
         </button>
       </form>
     </div>
