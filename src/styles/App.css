@@ -1,6 +1,5 @@
 /* General Styles */
-html,
-body {
+html, body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -9,7 +8,7 @@ body {
 }
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color: #1e1e1e; /* Default background color */
   color: #eaeaea;
 }
@@ -200,7 +199,7 @@ button.edit:hover {
 
 /* Front Page Login Button (Green) */
 button.login-button {
-  background-color: #2ecc71; /* Green */
+  background-color: #2ecc71;
 }
 
 button.login-button:hover {

@@ -45,22 +45,30 @@ function GoodsList({
     good.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const styles = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+
   return (
     <div>
       <h1>Vareliste</h1>
-      <input
-        type="text"
-        placeholder="Søg efter varer..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        style={{
-          width: "50%",
-          padding: "10px",
-          marginBottom: "20px",
-          borderRadius: "4px",
-          border: "1px solid #ccc",
-        }}
-      />
+      <div style={styles}>
+        <input
+          type="text"
+          placeholder="Søg efter varer..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{
+            width: "50%",
+            padding: "10px",
+            marginBottom: "20px",
+            borderRadius: "4px",
+            border: "1px solid #ccc",
+          }}
+        />
+      </div>
       <table>
         <thead>
           <tr>
@@ -88,14 +96,14 @@ function GoodsList({
                 {editingId === good.id ? (
                   <>
                     <button
-                      style={{ marginLeft: "20px" }}
+                      style={{ marginLeft: "15px" }}
                       onClick={() => saveEdit(good)}
                       className="save"
                     >
                       <SaveLogo />
                     </button>
                     <button
-                      style={{ marginLeft: "20px" }}
+                      style={{ marginLeft: "15px" }}
                       onClick={cancelEdit}
                       className="cancel"
                     >

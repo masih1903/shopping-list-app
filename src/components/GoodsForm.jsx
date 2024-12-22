@@ -33,6 +33,7 @@ function GoodsForm({ goodToEdit, mutateGood, resetForm, isEditing }) {
         <input id="id" type="hidden" value={good.id || ""} readOnly />
         <label htmlFor="name">Navn</label>
         <input
+          style={{ width: "70%", marginRight: "10px" }}
           id="name"
           type="text"
           placeholder="Angiv vare"
