@@ -88,14 +88,14 @@ function GoodsList({
                 {editingId === good.id ? (
                   <>
                     <button
-                      style={{ marginLeft: "10px" }}
+                      style={{ marginLeft: "20px" }}
                       onClick={() => saveEdit(good)}
                       className="save"
                     >
                       <SaveLogo />
                     </button>
                     <button
-                      style={{ marginLeft: "10px" }}
+                      style={{ marginLeft: "20px" }}
                       onClick={cancelEdit}
                       className="cancel"
                     >
