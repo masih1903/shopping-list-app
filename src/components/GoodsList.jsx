@@ -5,8 +5,6 @@ import Trashcan from "../SvgComponent/Trashcan";
 import SaveLogo from "../SvgComponent/SaveLogo";
 import CancelLogo from "../SvgComponent/CancelLogo";
 
-
-
 function GoodsList({
   goods,
   deleteGoodById,
@@ -16,6 +14,7 @@ function GoodsList({
 }) {
   const [editingId, setEditingId] = useState(null);
   const [editingValue, setEditingValue] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const startEditing = (good) => {
     setEditingId(good.id);
@@ -42,9 +41,26 @@ function GoodsList({
     }
   };
 
+  const filteredGoods = goods.filter((good) =>
+    good.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div>
       <h1>Vareliste</h1>
+      <input
+        type="text"
+        placeholder="Søg efter varer..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        style={{
+          width: "50%",
+          padding: "10px",
+          marginBottom: "20px",
+          borderRadius: "4px",
+          border: "1px solid #ccc",
+        }}
+      />
       <table>
         <thead>
           <tr>
@@ -54,7 +70,7 @@ function GoodsList({
           </tr>
         </thead>
         <tbody>
-          {goods.map((good) => (
+          {filteredGoods.map((good) => (
             <tr key={good.id}>
               <td>{good.id}</td>
               <td>
@@ -71,7 +87,7 @@ function GoodsList({
               <td>
                 {editingId === good.id ? (
                   <>
-                    <button onClick={() => saveEdit(good)} className="save">
+                    <button style= {{marginLeft: "10px"}} onClick={() => saveEdit(good)} className="save">
                       <SaveLogo />
                     </button>
                     <button onClick={cancelEdit} className="cancel">
