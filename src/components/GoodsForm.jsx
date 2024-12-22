@@ -40,7 +40,7 @@ function GoodsForm({ goodToEdit, mutateGood, resetForm, isEditing }) {
           onChange={handleChange}
         />
         <button className="add-to-cart" type="submit">
-          {isEditing ? "Opdater" : <PlusLogo />} 
+          {isEditing ? "Opdater" : <PlusLogo />}
         </button>
         <button className="delete" type="button" onClick={handleReset}>
           <ResetLogo />

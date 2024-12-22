@@ -87,10 +87,18 @@ function GoodsList({
               <td>
                 {editingId === good.id ? (
                   <>
-                    <button style= {{marginLeft: "10px"}} onClick={() => saveEdit(good)} className="save">
+                    <button
+                      style={{ marginLeft: "10px" }}
+                      onClick={() => saveEdit(good)}
+                      className="save"
+                    >
                       <SaveLogo />
                     </button>
-                    <button onClick={cancelEdit} className="cancel">
+                    <button
+                      style={{ marginLeft: "10px" }}
+                      onClick={cancelEdit}
+                      className="cancel"
+                    >
                       <CancelLogo />
                     </button>
                   </>

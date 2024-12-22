@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function LogIn({ login, onCancel }) {
+function LogIn({ login, onCancel, loginError, clearError }) {
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -14,6 +14,9 @@ function LogIn({ login, onCancel }) {
   const onChange = (evt) => {
     const { id, value } = evt.target;
     setCredentials({ ...credentials, [id]: value });
+    if (loginError) {
+      clearError(); // Clear error when the user starts typing
+    }
   };
 
   return (
@@ -29,6 +32,9 @@ function LogIn({ login, onCancel }) {
         }}
       />
       <h2>Log på</h2>
+      {loginError && (
+        <p style={{ color: "red", marginBottom: "10px" }}>{loginError}</p>
+      )}
       <form onSubmit={performLogin}>
         <input
           id="username"

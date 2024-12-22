@@ -18,6 +18,7 @@ function App() {
   const [shoppings, setShoppings] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [showLogin, setShowLogin] = useState(false); // Controls login page visibility
+  const [loginError, setLoginError] = useState(""); // Tracks login error message
   const [goodToEdit, setGoodToEdit] = useState(blankGood);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -41,8 +42,12 @@ function App() {
       .then(() => {
         setLoggedIn(true);
         setShowLogin(false); // Hide login page after successful login
+        setLoginError(""); // Clear any previous error messages
       })
-      .catch((error) => console.error("Login failed:", error));
+      .catch((error) => {
+        console.error("Login failed:", error);
+        setLoginError("Forkert brugernavn eller kodeord. Prøv igen."); // Set error message
+      });
   };
 
   const logout = () => {
@@ -112,7 +117,12 @@ function App() {
     // Render the login page
     return (
       <div className="login-container">
-        <LogIn login={login} onCancel={() => setShowLogin(false)} />
+        <LogIn
+          login={login}
+          onCancel={() => setShowLogin(false)}
+          loginError={loginError}
+          clearError={() => setLoginError("")}
+        />
       </div>
     );
   }
@@ -137,7 +147,6 @@ function App() {
             <LoginLogo />
           </button>
         ) : (
-          
           <button onClick={logout} className="logout-button">
             <LogOut />
           </button>
