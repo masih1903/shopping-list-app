@@ -1,4 +1,5 @@
-import Trashcan from "../SvgComponent/Trashcan";
+import Button from "./Button";
+import { TrashIcon } from "./Icons";
 
 function ShoppingList({ shoppings, deleteGoodFromShoppingListById }) {
   return (
@@ -36,13 +37,13 @@ function ShoppingList({ shoppings, deleteGoodFromShoppingListById }) {
                     ID: {shop.id}
                   </div>
                 </div>
-                <button
-                  className="delete icon-button"
+                <Button
+                  variant="danger"
+                  size="icon"
                   onClick={() => deleteGoodFromShoppingListById(shop.id)}
                   title="Fjern fra kurv"
-                >
-                  <Trashcan />
-                </button>
+                  icon={TrashIcon}
+                />
               </div>
             ))}
           </div>

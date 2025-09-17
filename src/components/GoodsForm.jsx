@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import PlusLogo from "../SvgComponent/PlusLogo";
-import ResetLogo from "../SvgComponent/ResetLogo";
-import SaveLogo from "../SvgComponent/SaveLogo";
+import Button from "./Button";
+import { PlusIcon, ResetIcon, SaveIcon } from "./Icons";
 import { detectCategory } from "../utils/categoryUtils";
 
 function GoodsForm({ goodToEdit, mutateGood, resetForm, isEditing }) {
@@ -63,23 +62,21 @@ function GoodsForm({ goodToEdit, mutateGood, resetForm, isEditing }) {
         </div>
         
         <div className="form-row">
-          <button className="add-to-cart" type="submit">
-            {isEditing ? (
-              <>
-                <SaveLogo />
-                Opdater vare
-              </>
-            ) : (
-              <>
-                <PlusLogo />
-                Tilføj vare
-              </>
-            )}
-          </button>
-          <button className="cancel" type="button" onClick={handleReset}>
-            <ResetLogo />
+          <Button
+            type="submit"
+            variant={isEditing ? "save" : "primary"}
+            icon={isEditing ? SaveIcon : PlusIcon}
+          >
+            {isEditing ? "Opdater vare" : "Tilføj vare"}
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            icon={ResetIcon}
+            onClick={handleReset}
+          >
             Ryd
-          </button>
+          </Button>
         </div>
       </form>
     </div>

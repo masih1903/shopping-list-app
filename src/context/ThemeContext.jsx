@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { STORAGE_KEYS } from '../utils/constants';
 
 const ThemeContext = createContext();
 
@@ -13,7 +14,7 @@ export const useTheme = () => {
 export const ThemeProvider = ({ children }) => {
   const [isDark, setIsDark] = useState(() => {
     // Check localStorage for saved theme preference
-    const savedTheme = localStorage.getItem('theme');
+    const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME);
     if (savedTheme) {
       return savedTheme === 'dark';
     }
@@ -23,7 +24,7 @@ export const ThemeProvider = ({ children }) => {
 
   useEffect(() => {
     // Save theme preference to localStorage
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    localStorage.setItem(STORAGE_KEYS.THEME, isDark ? 'dark' : 'light');
     
     // Apply theme class to document
     if (isDark) {

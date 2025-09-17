@@ -1,133 +1,41 @@
-import { useState, useEffect } from "react";
-import GoodsList from "./components/GoodsList";
-import GoodsForm from "./components/GoodsForm";
-import ShoppingList from "./components/ShoppingList";
-import LogIn from "./components/LogIn";
-import ThemeToggle from "./components/ThemeToggle";
-import facade from "./utils/apiFacade";
-import { detectCategory } from "./utils/categoryUtils";
+import { useState } from "react";
+import { GoodsList, GoodsForm, ShoppingList, LogIn, Header } from "./components";
+import { useAuth, useGoods, useShoppingList } from "./hooks";
+import { DEFAULTS } from "./utils/constants";
 import "./styles/App.css";
-import LoginLogo from "./SvgComponent/LoginLogo";
-import LogOut from "./SvgComponent/LogOut";
-
-const blankGood = {
-  id: "",
-  name: "",
-};
 
 function App() {
-  const [goods, setGoods] = useState([]);
-  const [shoppings, setShoppings] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [showLogin, setShowLogin] = useState(false); // Controls login page visibility
-  const [loginError, setLoginError] = useState(""); // Tracks login error message
-  const [goodToEdit, setGoodToEdit] = useState(blankGood);
+  // Authentication state
+  const { loggedIn, showLogin, loginError, login, logout, openLogin, closeLogin, clearError } = useAuth();
+  
+  // Data management hooks
+  const { goods, mutateGood, updateGood, deleteGood } = useGoods(loggedIn);
+  const { shoppings, addToShoppingList, removeFromShoppingList } = useShoppingList();
+  
+  // Form state
+  const [goodToEdit, setGoodToEdit] = useState(DEFAULTS.BLANK_GOOD);
   const [isEditing, setIsEditing] = useState(false);
   const [resetTrigger, setResetTrigger] = useState(0);
 
-  useEffect(() => {
-    // Fetch shopping lists (available for both guests and logged-in users)
-    facade
-      .fetchData("shoppinglists")
-      .then((data) => setShoppings(data))
-      .catch((err) => console.error("Failed to fetch shopping lists:", err));
-
-    // Fetch goods (always available to guests and logged-in users)
-    facade
-      .fetchData("products")
-      .then((data) => setGoods(data))
-      .catch((err) => console.error("Failed to fetch goods:", err));
-  }, [loggedIn]);
-
-  const login = (username, password) => {
-    facade
-      .login(username, password)
-      .then(() => {
-        setLoggedIn(true);
-        setShowLogin(false); // Hide login page after successful login
-        setLoginError(""); // Clear any previous error messages
-      })
-      .catch((error) => {
-        console.error("Login failed:", error);
-        setLoginError("Forkert brugernavn eller kodeord. Prøv igen."); // Set error message
-      });
-  };
-
-  const logout = () => {
-    facade.logout();
-    setLoggedIn(false);
-  };
-
-  const addToShoppingList = (good) => {
-    facade
-      .fetchData("shoppinglists", "POST", good)
-      .then((newShoppingItem) => setShoppings([...shoppings, newShoppingItem]))
-      .catch((err) => console.error("Failed to add to shopping list:", err));
-  };
-
-  const deleteGoodFromShoppingListById = (goodId) => {
-    facade
-      .fetchData(`shoppinglists/${goodId}`, "DELETE")
-      .then(() =>
-        setShoppings(shoppings.filter((shopping) => shopping.id !== goodId))
-      )
-      .catch((err) =>
-        console.error("Failed to delete from shopping list:", err)
-      );
-  };
-
-  const deleteGoodById = (goodId) => {
-    if (!loggedIn) return; // Restrict deletion for guests
-    facade
-      .fetchData(`products/${goodId}`, "DELETE")
-      .then(() => setGoods(goods.filter((good) => good.id !== goodId)))
-      .catch((err) => console.error("Failed to delete good:", err));
-  };
-
-  const updateGood = (good) => {
-    facade
-      .fetchData(`products/${good.id}`, "PUT", good)
-      .then((updatedGood) => {
-        setGoods((prevGoods) =>
-          prevGoods.map((g) => (g.id === updatedGood.id ? updatedGood : g))
-        );
-      })
-      .catch((err) => console.error("Failed to update good:", err));
-  };
-
-  const createGood = (good) => {
-    const { id, ...newGood } = good;
-    
-    // Send only the fields the backend expects (id and name)
-    facade
-      .fetchData("products", "POST", newGood)
-      .then((createdGood) => {
-        setGoods([...goods, createdGood]);
-        // Log the detected category for user feedback (frontend-only)
-        const detectedCategory = detectCategory(createdGood.name);
-        console.log(`✅ Added "${createdGood.name}" to category: ${detectedCategory}`);
-      })
-      .catch((err) => console.error("Failed to create good:", err));
-  };
-
-  const mutateGood = (good) => {
-    if (good.id !== "") {
-      updateGood(good);
-    } else {
-      createGood(good);
+  // Form management functions
+  const handleMutateGood = async (good) => {
+    try {
+      await mutateGood(good);
+      resetForm();
+    } catch (error) {
+      // Error is already handled in the hook
     }
   };
 
   const resetForm = () => {
-    setGoodToEdit(blankGood);
+    setGoodToEdit(DEFAULTS.BLANK_GOOD);
     setIsEditing(false);
   };
 
   const resetToHome = () => {
     // Reset all states to initial/home state
-    setShowLogin(false);
-    setLoginError("");
-    setGoodToEdit(blankGood);
+    closeLogin();
+    setGoodToEdit(DEFAULTS.BLANK_GOOD);
     setIsEditing(false);
     // Trigger reset in child components
     setResetTrigger(prev => prev + 1);
@@ -139,9 +47,9 @@ function App() {
       <div className="login-container">
         <LogIn
           login={login}
-          onCancel={() => setShowLogin(false)}
+          onCancel={closeLogin}
           loginError={loginError}
-          clearError={() => setLoginError("")}
+          clearError={clearError}
           resetToHome={resetToHome}
         />
       </div>
@@ -151,31 +59,12 @@ function App() {
   // Render the application page
   return (
     <div className="app-wrapper">
-      <div className="app-header">
-        <div className="header-controls">
-          <div className="auth-button">
-            {!loggedIn ? (
-              <button onClick={() => setShowLogin(true)} className="login-button">
-                <LoginLogo />
-                Log ind
-              </button>
-            ) : (
-              <button onClick={logout} className="logout-button">
-                <LogOut />
-                Log ud
-              </button>
-            )}
-          </div>
-          <ThemeToggle />
-        </div>
-        <img
-          src="baeTechTransparentRedSmall.png"
-          alt="baeTech Logo"
-          onClick={resetToHome}
-          style={{ cursor: 'pointer' }}
-          title="Klik for at gå til forsiden"
-        />
-      </div>
+      <Header 
+        loggedIn={loggedIn}
+        onLogin={openLogin}
+        onLogout={logout}
+        onResetToHome={resetToHome}
+      />
 
       <div className="container">
         
@@ -183,9 +72,8 @@ function App() {
           {loggedIn && (
             <div className="card">
               <GoodsForm
-                blankGood={blankGood}
                 goodToEdit={goodToEdit}
-                mutateGood={mutateGood}
+                mutateGood={handleMutateGood}
                 resetForm={resetForm}
                 isEditing={isEditing}
               />
@@ -194,10 +82,10 @@ function App() {
           <div className="card">
             <GoodsList
               goods={goods}
-              deleteGoodById={deleteGoodById}
+              deleteGoodById={deleteGood}
+              updateGood={updateGood}
               addToShoppingList={addToShoppingList}
               loggedIn={loggedIn}
-              updateGood={updateGood}
               resetToDefaults={resetTrigger}
             />
           </div>
@@ -207,7 +95,7 @@ function App() {
           <div className="card card-compact">
             <ShoppingList
               shoppings={shoppings}
-              deleteGoodFromShoppingListById={deleteGoodFromShoppingListById}
+              deleteGoodFromShoppingListById={removeFromShoppingList}
             />
           </div>
         </div>

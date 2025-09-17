@@ -1,10 +1,8 @@
 import React, { useState, useMemo } from "react";
-import Shoppingcart from "../SvgComponent/Shoppingcart";
-import EditLogo from "../SvgComponent/EditLogo";
-import Trashcan from "../SvgComponent/Trashcan";
-import SaveLogo from "../SvgComponent/SaveLogo";
-import CancelLogo from "../SvgComponent/CancelLogo";
+import Button from "./Button";
+import { ShoppingCartIcon, EditIcon, TrashIcon, SaveIcon, CancelIcon } from "./Icons";
 import { detectCategory } from "../utils/categoryUtils";
+import { UI_TEXT } from "../utils/constants";
 
 function GoodsList({
   goods,
@@ -22,6 +20,9 @@ function GoodsList({
   const [sortBy, setSortBy] = useState("name"); // "name", "id", "recent"
   const [viewMode, setViewMode] = useState("cards"); // "cards", "compact"
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [addingToCart, setAddingToCart] = useState(null); // Track which item is being added
+  const [recentlyAdded, setRecentlyAdded] = useState(new Set()); // Track recently added items
+  const [showSuccessToast, setShowSuccessToast] = useState(null); // Show success message
 
   const startEditing = (good) => {
     setEditingId(good.id);
@@ -40,11 +41,45 @@ function GoodsList({
   };
 
   const confirmDelete = (goodId) => {
-    const isConfirmed = window.confirm(
-      "Er du sikker på, at du vil slette denne vare?"
-    );
+    const isConfirmed = window.confirm(UI_TEXT.CONFIRM_DELETE);
     if (isConfirmed) {
-      deleteGoodById(goodId); // Proceed with deletion
+      deleteGoodById(goodId);
+    }
+  };
+
+  const handleAddToCart = async (good) => {
+    try {
+      // Set loading state for this specific item
+      setAddingToCart(good.id);
+      
+      // Call the add to shopping list function
+      await addToShoppingList(good);
+      
+      // Add to recently added set for visual feedback
+      setRecentlyAdded(prev => new Set([...prev, good.id]));
+      
+      // Show success toast
+      setShowSuccessToast(good.name);
+      
+      // Remove from recently added after animation duration
+      setTimeout(() => {
+        setRecentlyAdded(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(good.id);
+          return newSet;
+        });
+      }, 2000); // 2 seconds visual feedback
+      
+      // Hide success toast
+      setTimeout(() => {
+        setShowSuccessToast(null);
+      }, 3000);
+      
+    } catch (error) {
+      console.error('Failed to add to cart:', error);
+    } finally {
+      // Clear loading state
+      setAddingToCart(null);
     }
   };
 
@@ -104,11 +139,24 @@ function GoodsList({
       setSortBy("name");
       setViewMode("cards");
       setSelectedCategory("all");
+      setAddingToCart(null);
+      setRecentlyAdded(new Set());
+      setShowSuccessToast(null);
     }
   }, [resetToDefaults]);
 
   return (
     <div>
+      {/* Success Toast */}
+      {showSuccessToast && (
+        <div className="success-toast">
+          <span className="toast-icon">✅</span>
+          <span className="toast-message">
+            "{showSuccessToast}" tilføjet til kurv!
+          </span>
+        </div>
+      )}
+      
       <h1>📦 Vareliste</h1>
       
       {/* Search Bar */}
@@ -199,7 +247,14 @@ function GoodsList({
       {/* Items Display */}
       <div className={`items-grid ${viewMode === "compact" ? "compact-view" : ""}`}>
         {paginatedGoods.map((good) => (
-          <div key={good.id} className={`item-card ${viewMode === "compact" ? "compact" : ""}`}>
+          <div 
+            key={good.id} 
+            className={`
+              item-card 
+              ${viewMode === "compact" ? "compact" : ""}
+              ${recentlyAdded.has(good.id) ? "item-card-success" : ""}
+            `.trim()}
+          >
             <div className="item-info">
               {editingId === good.id ? (
                 <input
@@ -223,48 +278,59 @@ function GoodsList({
             <div className="item-actions">
               {editingId === good.id ? (
                 <div className="button-group">
-                  <button
+                  <Button
+                    variant="save"
+                    size="icon"
                     onClick={() => saveEdit(good)}
-                    className="save icon-button"
                     title="Gem ændringer"
-                  >
-                    <SaveLogo />
-                  </button>
-                  <button
+                    icon={SaveIcon}
+                  />
+                  <Button
+                    variant="secondary"
+                    size="icon"
                     onClick={cancelEdit}
-                    className="cancel icon-button"
                     title="Annuller"
-                  >
-                    <CancelLogo />
-                  </button>
+                    icon={CancelIcon}
+                  />
                 </div>
               ) : (
                 <div className="button-group">
                   {loggedIn && (
                     <>
-                      <button
+                      <Button
+                        variant="edit"
+                        size="icon"
                         onClick={() => startEditing(good)}
-                        className="edit icon-button"
                         title="Rediger vare"
-                      >
-                        <EditLogo />
-                      </button>
-                      <button
+                        icon={EditIcon}
+                      />
+                      <Button
+                        variant="danger"
+                        size="icon"
                         onClick={() => confirmDelete(good.id)}
-                        className="delete icon-button"
                         title="Slet vare"
-                      >
-                        <Trashcan />
-                      </button>
+                        icon={TrashIcon}
+                      />
                     </>
                   )}
-                  <button
-                    onClick={() => addToShoppingList(good)}
-                    className="add-to-cart icon-button"
-                    title="Tilføj til indkøbskurv"
-                  >
-                    <Shoppingcart />
-                  </button>
+                  <Button
+                    variant="primary"
+                    size="icon"
+                    onClick={() => handleAddToCart(good)}
+                    title={
+                      addingToCart === good.id 
+                        ? "Tilføjer til kurv..." 
+                        : recentlyAdded.has(good.id)
+                        ? "Tilføjet til kurv!"
+                        : "Tilføj til indkøbskurv"
+                    }
+                    icon={ShoppingCartIcon}
+                    disabled={addingToCart === good.id}
+                    className={`
+                      ${addingToCart === good.id ? 'adding-to-cart' : ''}
+                      ${recentlyAdded.has(good.id) ? 'recently-added' : ''}
+                    `.trim()}
+                  />
                 </div>
               )}
             </div>

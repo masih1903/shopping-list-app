@@ -504,6 +504,32 @@ button.logout-button:hover {
   box-shadow: 0 8px 30px var(--shadow-medium);
 }
 
+.item-card-success {
+  animation: itemCardSuccess 0.8s ease-out;
+  border: 2px solid rgba(81, 207, 102, 0.6) !important;
+}
+
+@keyframes itemCardSuccess {
+  0% { 
+    background: var(--card-bg);
+    border-color: var(--border-secondary);
+  }
+  25% { 
+    background: rgba(81, 207, 102, 0.1);
+    border-color: rgba(81, 207, 102, 0.6);
+    transform: scale(1.02);
+  }
+  50% { 
+    background: rgba(81, 207, 102, 0.05);
+    border-color: rgba(81, 207, 102, 0.4);
+  }
+  100% { 
+    background: var(--card-bg);
+    border-color: rgba(81, 207, 102, 0.6);
+    transform: scale(1);
+  }
+}
+
 .item-info {
   flex: 1;
   display: flex;
@@ -803,6 +829,110 @@ input:focus-visible {
   outline-offset: 2px;
 }
 
+/* Add to cart visual feedback */
+.adding-to-cart {
+  position: relative;
+  opacity: 0.7;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+
+.adding-to-cart::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 2px solid transparent;
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: addToCartSpin 0.8s linear infinite;
+}
+
+.recently-added {
+  background: linear-gradient(135deg, #51cf66 0%, #40c057 100%) !important;
+  animation: addToCartSuccess 0.6s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.recently-added::before {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  z-index: 1;
+  animation: checkmarkBounce 0.6s ease-out;
+}
+
+.recently-added svg {
+  opacity: 0;
+}
+
+@keyframes addToCartSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes addToCartSuccess {
+  0% { 
+    transform: scale(1);
+    background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+  }
+  50% { 
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #40c057 0%, #37b24d 100%);
+  }
+  100% { 
+    transform: scale(1);
+    background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+  }
+}
+
+@keyframes checkmarkBounce {
+  0% { 
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  50% { 
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+  100% { 
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Enhanced button press feedback */
+button:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+/* Pulse effect on hover for add to cart buttons */
+button.add-to-cart:hover:not(.adding-to-cart):not(.recently-added) {
+  animation: pulseGreen 1.5s infinite;
+}
+
+@keyframes pulseGreen {
+  0% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(81, 207, 102, 0.4);
+  }
+  100% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
 /* Success states */
 .success-message {
   background: #c6f6d5;
@@ -812,6 +942,60 @@ input:focus-visible {
   margin-bottom: 1rem;
   font-size: 0.9rem;
   font-weight: 500;
+}
+
+/* Success Toast */
+.success-toast {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  background: linear-gradient(135deg, #51cf66 0%, #40c057 100%);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(81, 207, 102, 0.3);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  animation: toastSlideIn 0.4s ease-out;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.toast-icon {
+  font-size: 1.2rem;
+  animation: toastIconBounce 0.6s ease-out;
+}
+
+.toast-message {
+  max-width: 250px;
+  word-wrap: break-word;
+}
+
+@keyframes toastSlideIn {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes toastIconBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-3px);
+  }
+  60% {
+    transform: translateY(-1px);
+  }
 }
 
 /* Empty state styling */
@@ -1040,6 +1224,20 @@ input:focus-visible {
   .item-card.compact .item-meta {
     flex-direction: column;
     gap: 0.25rem;
+  }
+
+  /* Mobile responsive toast */
+  .success-toast {
+    top: 1rem;
+    right: 1rem;
+    left: 1rem;
+    max-width: none;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+  
+  .toast-message {
+    max-width: none;
   }
 }
 

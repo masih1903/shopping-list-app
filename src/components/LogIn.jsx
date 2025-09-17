@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "./Button";
 
 function LogIn({ login, onCancel, loginError, clearError, resetToHome }) {
   const [credentials, setCredentials] = useState({
@@ -52,12 +53,12 @@ function LogIn({ login, onCancel, loginError, clearError, resetToHome }) {
           onChange={onChange}
           required
         />
-        <button type="submit" className="login-submit-button">
+        <Button type="submit" variant="submit">
           Log på
-        </button>
-        <button type="button" onClick={onCancel} className="cancel-button">
+        </Button>
+        <Button type="button" variant="secondary" className="cancel-button" onClick={onCancel}>
           Tilbage til forside
-        </button>
+        </Button>
       </form>
     </div>
   );

@@ -1,4 +1,6 @@
-const URL = "https://productapi.cphmk.dk/api";
+import { API_CONFIG, STORAGE_KEYS } from './constants';
+
+const { BASE_URL, ENDPOINTS } = API_CONFIG;
 
 function handleHttpErrors(res) {
   if (!res.ok) {
@@ -16,9 +18,9 @@ function handleHttpErrors(res) {
 }
 
 function apiFacade() {
-  const setToken = (token) => localStorage.setItem("jwtToken", token);
-  const getToken = () => localStorage.getItem("jwtToken");
-  const logout = () => localStorage.removeItem("jwtToken");
+  const setToken = (token) => localStorage.setItem(STORAGE_KEYS.JWT_TOKEN, token);
+  const getToken = () => localStorage.getItem(STORAGE_KEYS.JWT_TOKEN);
+  const logout = () => localStorage.removeItem(STORAGE_KEYS.JWT_TOKEN);
   const loggedIn = () => getToken() != null;
 
   const getUserRoles = () => {
@@ -37,8 +39,8 @@ function apiFacade() {
   };
 
   const login = (username, password) => {
-    const options = makeOptions("POST", false, { username, password }); // Adjust if backend expects different keys
-    return fetch(`${URL}/auth/login`, options)
+    const options = makeOptions("POST", false, { username, password });
+    return fetch(`${BASE_URL}/${ENDPOINTS.AUTH_LOGIN}`, options)
       .then(handleHttpErrors)
       .then((res) => {
         setToken(res.token);
@@ -47,7 +49,7 @@ function apiFacade() {
 
   const fetchData = (endpoint, method = "GET", body = null) => {
     const options = makeOptions(method, true, body);
-    return fetch(`${URL}/${endpoint}`, options).then(handleHttpErrors);
+    return fetch(`${BASE_URL}/${endpoint}`, options).then(handleHttpErrors);
   };
 
   const makeOptions = (method, addToken, body) => {
