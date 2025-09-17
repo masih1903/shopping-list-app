@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function LogIn({ login, onCancel, loginError, clearError }) {
+function LogIn({ login, onCancel, loginError, clearError, resetToHome }) {
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -24,6 +24,9 @@ function LogIn({ login, onCancel, loginError, clearError }) {
       <img
         src="baeTechTransparentRedSmall.png"
         alt="baeTech Logo"
+        onClick={resetToHome}
+        style={{ cursor: 'pointer' }}
+        title="Klik for at gå til forsiden"
       />
       <h2>Velkommen tilbage</h2>
       

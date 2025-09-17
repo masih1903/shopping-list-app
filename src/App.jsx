@@ -3,7 +3,9 @@ import GoodsList from "./components/GoodsList";
 import GoodsForm from "./components/GoodsForm";
 import ShoppingList from "./components/ShoppingList";
 import LogIn from "./components/LogIn";
+import ThemeToggle from "./components/ThemeToggle";
 import facade from "./utils/apiFacade";
+import { detectCategory } from "./utils/categoryUtils";
 import "./styles/App.css";
 import LoginLogo from "./SvgComponent/LoginLogo";
 import LogOut from "./SvgComponent/LogOut";
@@ -21,6 +23,7 @@ function App() {
   const [loginError, setLoginError] = useState(""); // Tracks login error message
   const [goodToEdit, setGoodToEdit] = useState(blankGood);
   const [isEditing, setIsEditing] = useState(false);
+  const [resetTrigger, setResetTrigger] = useState(0);
 
   useEffect(() => {
     // Fetch shopping lists (available for both guests and logged-in users)
@@ -94,9 +97,16 @@ function App() {
 
   const createGood = (good) => {
     const { id, ...newGood } = good;
+    
+    // Send only the fields the backend expects (id and name)
     facade
       .fetchData("products", "POST", newGood)
-      .then((createdGood) => setGoods([...goods, createdGood]))
+      .then((createdGood) => {
+        setGoods([...goods, createdGood]);
+        // Log the detected category for user feedback (frontend-only)
+        const detectedCategory = detectCategory(createdGood.name);
+        console.log(`✅ Added "${createdGood.name}" to category: ${detectedCategory}`);
+      })
       .catch((err) => console.error("Failed to create good:", err));
   };
 
@@ -113,6 +123,16 @@ function App() {
     setIsEditing(false);
   };
 
+  const resetToHome = () => {
+    // Reset all states to initial/home state
+    setShowLogin(false);
+    setLoginError("");
+    setGoodToEdit(blankGood);
+    setIsEditing(false);
+    // Trigger reset in child components
+    setResetTrigger(prev => prev + 1);
+  };
+
   if (showLogin) {
     // Render the login page
     return (
@@ -122,6 +142,7 @@ function App() {
           onCancel={() => setShowLogin(false)}
           loginError={loginError}
           clearError={() => setLoginError("")}
+          resetToHome={resetToHome}
         />
       </div>
     );
@@ -131,26 +152,32 @@ function App() {
   return (
     <div className="app-wrapper">
       <div className="app-header">
+        <div className="header-controls">
+          <div className="auth-button">
+            {!loggedIn ? (
+              <button onClick={() => setShowLogin(true)} className="login-button">
+                <LoginLogo />
+                Log ind
+              </button>
+            ) : (
+              <button onClick={logout} className="logout-button">
+                <LogOut />
+                Log ud
+              </button>
+            )}
+          </div>
+          <ThemeToggle />
+        </div>
         <img
           src="baeTechTransparentRedSmall.png"
           alt="baeTech Logo"
+          onClick={resetToHome}
+          style={{ cursor: 'pointer' }}
+          title="Klik for at gå til forsiden"
         />
       </div>
 
       <div className="container">
-        <div className="auth-button">
-          {!loggedIn ? (
-            <button onClick={() => setShowLogin(true)} className="login-button">
-              <LoginLogo />
-              Log ind
-            </button>
-          ) : (
-            <button onClick={logout} className="logout-button">
-              <LogOut />
-              Log ud
-            </button>
-          )}
-        </div>
         
         <div className="left-panel">
           {loggedIn && (
@@ -171,6 +198,7 @@ function App() {
               addToShoppingList={addToShoppingList}
               loggedIn={loggedIn}
               updateGood={updateGood}
+              resetToDefaults={resetTrigger}
             />
           </div>
         </div>
@@ -186,7 +214,7 @@ function App() {
       </div>
       
       <footer className="footer">
-        <p>© {new Date().getFullYear()} baeTech. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} MK. All rights reserved.</p>
       </footer>
     </div>
   );

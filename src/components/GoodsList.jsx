@@ -4,6 +4,7 @@ import EditLogo from "../SvgComponent/EditLogo";
 import Trashcan from "../SvgComponent/Trashcan";
 import SaveLogo from "../SvgComponent/SaveLogo";
 import CancelLogo from "../SvgComponent/CancelLogo";
+import { detectCategory } from "../utils/categoryUtils";
 
 function GoodsList({
   goods,
@@ -11,12 +12,13 @@ function GoodsList({
   addToShoppingList,
   loggedIn,
   updateGood,
+  resetToDefaults,
 }) {
   const [editingId, setEditingId] = useState(null);
   const [editingValue, setEditingValue] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
   const [sortBy, setSortBy] = useState("name"); // "name", "id", "recent"
   const [viewMode, setViewMode] = useState("cards"); // "cards", "compact"
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -46,28 +48,6 @@ function GoodsList({
     }
   };
 
-  // Simple category detection based on product names
-  const detectCategory = (name) => {
-    const lowercaseName = name.toLowerCase();
-    if (lowercaseName.includes('frugt') || lowercaseName.includes('grønt') || 
-        lowercaseName.includes('æble') || lowercaseName.includes('banan') ||
-        lowercaseName.includes('tomat') || lowercaseName.includes('løg')) {
-      return 'Frugt & Grønt';
-    }
-    if (lowercaseName.includes('mælk') || lowercaseName.includes('ost') || 
-        lowercaseName.includes('yoghurt') || lowercaseName.includes('smør')) {
-      return 'Mejeri';
-    }
-    if (lowercaseName.includes('kød') || lowercaseName.includes('fisk') || 
-        lowercaseName.includes('kylling') || lowercaseName.includes('pølse')) {
-      return 'Kød & Fisk';
-    }
-    if (lowercaseName.includes('brød') || lowercaseName.includes('mel') || 
-        lowercaseName.includes('pasta') || lowercaseName.includes('ris')) {
-      return 'Bageri & Korn';
-    }
-    return 'Andet';
-  };
 
   // Get unique categories
   const categories = useMemo(() => {
@@ -112,6 +92,20 @@ function GoodsList({
   React.useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm, selectedCategory, sortBy, itemsPerPage]);
+
+  // Reset all filters and states when resetToDefaults changes
+  React.useEffect(() => {
+    if (resetToDefaults) {
+      setEditingId(null);
+      setEditingValue("");
+      setSearchTerm("");
+      setCurrentPage(1);
+      setItemsPerPage(5);
+      setSortBy("name");
+      setViewMode("cards");
+      setSelectedCategory("all");
+    }
+  }, [resetToDefaults]);
 
   return (
     <div>
