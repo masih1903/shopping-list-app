@@ -82,6 +82,7 @@ function App() {
           <div className="card">
             <GoodsList
               goods={goods}
+              shoppings={shoppings}
               deleteGoodById={deleteGood}
               updateGood={updateGood}
               addToShoppingList={addToShoppingList}

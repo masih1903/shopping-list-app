@@ -6,6 +6,7 @@ import { UI_TEXT } from "../utils/constants";
 
 function GoodsList({
   goods,
+  shoppings,
   deleteGoodById,
   addToShoppingList,
   loggedIn,
@@ -23,6 +24,7 @@ function GoodsList({
   const [addingToCart, setAddingToCart] = useState(null); // Track which item is being added
   const [recentlyAdded, setRecentlyAdded] = useState(new Set()); // Track recently added items
   const [showSuccessToast, setShowSuccessToast] = useState(null); // Show success message
+  const [showWarningToast, setShowWarningToast] = useState(null); // Show warning message for duplicates
 
   const startEditing = (good) => {
     setEditingId(good.id);
@@ -47,7 +49,25 @@ function GoodsList({
     }
   };
 
+  // Check if item is already in shopping cart
+  const isItemInCart = (goodId) => {
+    return shoppings.some(shopping => shopping.id === goodId);
+  };
+
   const handleAddToCart = async (good) => {
+    // Check if item is already in cart
+    if (isItemInCart(good.id)) {
+      // Show warning notification
+      setShowWarningToast(good.name);
+      
+      // Hide warning toast after 3 seconds
+      setTimeout(() => {
+        setShowWarningToast(null);
+      }, 3000);
+      
+      return; // Don't proceed with adding to cart
+    }
+
     try {
       // Set loading state for this specific item
       setAddingToCart(good.id);
@@ -142,6 +162,7 @@ function GoodsList({
       setAddingToCart(null);
       setRecentlyAdded(new Set());
       setShowSuccessToast(null);
+      setShowWarningToast(null);
     }
   }, [resetToDefaults]);
 
@@ -153,6 +174,16 @@ function GoodsList({
           <span className="toast-icon">✅</span>
           <span className="toast-message">
             "{showSuccessToast}" tilføjet til kurv!
+          </span>
+        </div>
+      )}
+
+      {/* Warning Toast */}
+      {showWarningToast && (
+        <div className="warning-toast">
+          <span className="toast-icon">⚠️</span>
+          <span className="toast-message">
+            "{showWarningToast}" er allerede i kurven!
           </span>
         </div>
       )}
@@ -266,7 +297,14 @@ function GoodsList({
                 />
               ) : (
                 <>
-                  <h3 className="item-name">{good.name}</h3>
+                  <div className="item-name-container">
+                    <h3 className="item-name">{good.name}</h3>
+                    {isItemInCart(good.id) && (
+                      <span className="in-cart-badge" title="Allerede i kurven">
+                        🛒
+                      </span>
+                    )}
+                  </div>
                   <div className="item-meta">
                     <span className="item-id">ID: {good.id}</span>
                     <span className="item-category">{detectCategory(good.name)}</span>
@@ -314,12 +352,14 @@ function GoodsList({
                     </>
                   )}
                   <Button
-                    variant="primary"
+                    variant={isItemInCart(good.id) ? "secondary" : "primary"}
                     size="icon"
                     onClick={() => handleAddToCart(good)}
                     title={
                       addingToCart === good.id 
                         ? "Tilføjer til kurv..." 
+                        : isItemInCart(good.id)
+                        ? "Allerede i kurven - klik for at se besked"
                         : recentlyAdded.has(good.id)
                         ? "Tilføjet til kurv!"
                         : "Tilføj til indkøbskurv"
@@ -329,6 +369,7 @@ function GoodsList({
                     className={`
                       ${addingToCart === good.id ? 'adding-to-cart' : ''}
                       ${recentlyAdded.has(good.id) ? 'recently-added' : ''}
+                      ${isItemInCart(good.id) ? 'already-in-cart' : ''}
                     `.trim()}
                   />
                 </div>
