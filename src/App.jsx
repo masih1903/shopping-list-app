@@ -130,52 +130,61 @@ function App() {
   // Render the application page
   return (
     <div className="app-wrapper">
-      <img
-        src="baeTechTransparentRedSmall.png"
-        alt="Logo"
-        style={{
-          width: "350px",
-          height: "auto",
-          display: "block",
-          margin: "0 auto",
-        }}
-      />
+      <div className="app-header">
+        <img
+          src="baeTechTransparentRedSmall.png"
+          alt="baeTech Logo"
+        />
+      </div>
 
       <div className="container">
-        {!loggedIn ? (
-          <button onClick={() => setShowLogin(true)} className="login-button">
-            <LoginLogo />
-          </button>
-        ) : (
-          <button onClick={logout} className="logout-button">
-            <LogOut />
-          </button>
-        )}
+        <div className="auth-button">
+          {!loggedIn ? (
+            <button onClick={() => setShowLogin(true)} className="login-button">
+              <LoginLogo />
+              Log ind
+            </button>
+          ) : (
+            <button onClick={logout} className="logout-button">
+              <LogOut />
+              Log ud
+            </button>
+          )}
+        </div>
+        
         <div className="left-panel">
           {loggedIn && (
-            <GoodsForm
-              blankGood={blankGood}
-              goodToEdit={goodToEdit}
-              mutateGood={mutateGood}
-              resetForm={resetForm}
-              isEditing={isEditing}
-            />
+            <div className="card">
+              <GoodsForm
+                blankGood={blankGood}
+                goodToEdit={goodToEdit}
+                mutateGood={mutateGood}
+                resetForm={resetForm}
+                isEditing={isEditing}
+              />
+            </div>
           )}
-          <GoodsList
-            goods={goods}
-            deleteGoodById={deleteGoodById}
-            addToShoppingList={addToShoppingList}
-            loggedIn={loggedIn}
-            updateGood={updateGood} // Pass updateGood to handle edits
-          />
+          <div className="card">
+            <GoodsList
+              goods={goods}
+              deleteGoodById={deleteGoodById}
+              addToShoppingList={addToShoppingList}
+              loggedIn={loggedIn}
+              updateGood={updateGood}
+            />
+          </div>
         </div>
+        
         <div className="right-panel">
-          <ShoppingList
-            shoppings={shoppings}
-            deleteGoodFromShoppingListById={deleteGoodFromShoppingListById}
-          />
+          <div className="card card-compact">
+            <ShoppingList
+              shoppings={shoppings}
+              deleteGoodFromShoppingListById={deleteGoodFromShoppingListById}
+            />
+          </div>
         </div>
       </div>
+      
       <footer className="footer">
         <p>© {new Date().getFullYear()} baeTech. All rights reserved.</p>
       </footer>

@@ -23,24 +23,23 @@ function LogIn({ login, onCancel, loginError, clearError }) {
     <div className="login-form">
       <img
         src="baeTechTransparentRedSmall.png"
-        alt="Logo"
-        style={{
-          width: "350px",
-          height: "auto",
-          display: "block",
-          margin: "0 auto",
-        }}
+        alt="baeTech Logo"
       />
-      <h2>Log på</h2>
+      <h2>Velkommen tilbage</h2>
+      
       {loginError && (
-        <p style={{ color: "red", marginBottom: "10px" }}>{loginError}</p>
+        <div className="login-error">
+          {loginError}
+        </div>
       )}
+      
       <form onSubmit={performLogin}>
         <input
           id="username"
           placeholder="Brugernavn"
           value={credentials.username}
           onChange={onChange}
+          required
         />
         <input
           id="password"
@@ -48,12 +47,13 @@ function LogIn({ login, onCancel, loginError, clearError }) {
           placeholder="Kodeord"
           value={credentials.password}
           onChange={onChange}
+          required
         />
         <button type="submit" className="login-submit-button">
           Log på
         </button>
         <button type="button" onClick={onCancel} className="cancel-button">
-          Tilbage
+          Tilbage til forside
         </button>
       </form>
     </div>

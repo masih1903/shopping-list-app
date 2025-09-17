@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PlusLogo from "../SvgComponent/PlusLogo";
 import ResetLogo from "../SvgComponent/ResetLogo";
+import SaveLogo from "../SvgComponent/SaveLogo";
 
 function GoodsForm({ goodToEdit, mutateGood, resetForm, isEditing }) {
   const [good, setGood] = useState({ id: "", name: "" });
@@ -28,24 +29,42 @@ function GoodsForm({ goodToEdit, mutateGood, resetForm, isEditing }) {
 
   return (
     <div>
-      <h1>{isEditing ? "Tilføj vare" : "Tilføj vare"}</h1>
-      <form onSubmit={handleSubmit}>
+      <h1>➕ Tilføj ny vare</h1>
+      
+      <form onSubmit={handleSubmit} className="form-container">
         <input id="id" type="hidden" value={good.id || ""} readOnly />
-        <label htmlFor="name">Navn</label>
-        <input
-          style={{ width: "70%", marginRight: "10px" }}
-          id="name"
-          type="text"
-          placeholder="Angiv vare"
-          value={good.name || ""}
-          onChange={handleChange}
-        />
-        <button className="add-to-cart" type="submit">
-          {isEditing ? "Opdater" : <PlusLogo />}
-        </button>
-        <button className="delete" type="button" onClick={handleReset}>
-          <ResetLogo />
-        </button>
+        
+        <div>
+          <label htmlFor="name">Varenavn</label>
+          <input
+            id="name"
+            type="text"
+            placeholder="Angiv varenavn..."
+            value={good.name || ""}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        
+        <div className="form-row">
+          <button className="add-to-cart" type="submit">
+            {isEditing ? (
+              <>
+                <SaveLogo />
+                Opdater vare
+              </>
+            ) : (
+              <>
+                <PlusLogo />
+                Tilføj vare
+              </>
+            )}
+          </button>
+          <button className="cancel" type="button" onClick={handleReset}>
+            <ResetLogo />
+            Ryd
+          </button>
+        </div>
       </form>
     </div>
   );

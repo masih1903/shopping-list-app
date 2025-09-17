@@ -45,102 +45,107 @@ function GoodsList({
     good.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const styles = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  };
-
   return (
     <div>
       <h1>Vareliste</h1>
-      <div style={styles}>
+      
+      <div className="search-container">
         <input
           type="text"
           placeholder="Søg efter varer..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            width: "50%",
-            padding: "10px",
-            marginBottom: "20px",
-            borderRadius: "4px",
-            border: "1px solid #ccc",
-          }}
+          className="search-input"
         />
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Navn</th>
-            <th>Handlinger</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredGoods.map((good) => (
-            <tr key={good.id}>
-              <td>{good.id}</td>
-              <td>
-                {editingId === good.id ? (
-                  <input
-                    type="text"
-                    value={editingValue}
-                    onChange={(e) => setEditingValue(e.target.value)}
-                  />
-                ) : (
-                  good.name
-                )}
-              </td>
-              <td>
-                {editingId === good.id ? (
-                  <>
-                    <button
-                      style={{ marginLeft: "15px" }}
-                      onClick={() => saveEdit(good)}
-                      className="save"
-                    >
-                      <SaveLogo />
-                    </button>
-                    <button
-                      style={{ marginLeft: "15px" }}
-                      onClick={cancelEdit}
-                      className="cancel"
-                    >
-                      <CancelLogo />
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    {loggedIn && (
-                      <>
-                        <button
-                          onClick={() => startEditing(good)}
-                          className="edit"
-                        >
-                          <EditLogo />
-                        </button>
-                        <button
-                          onClick={() => confirmDelete(good.id)}
-                          className="delete"
-                        >
-                          <Trashcan />
-                        </button>
-                      </>
-                    )}
-                    <button
-                      onClick={() => addToShoppingList(good)}
-                      className="add-to-cart"
-                    >
-                      <Shoppingcart />
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+      <div className="items-grid">
+        {filteredGoods.map((good) => (
+          <div key={good.id} className="item-card">
+            <div className="item-info">
+              {editingId === good.id ? (
+                <input
+                  type="text"
+                  value={editingValue}
+                  onChange={(e) => setEditingValue(e.target.value)}
+                  className="editing-input"
+                  autoFocus
+                />
+              ) : (
+                <>
+                  <h3 className="item-name">{good.name}</h3>
+                  <p className="item-id">ID: {good.id}</p>
+                </>
+              )}
+            </div>
+            
+            <div className="item-actions">
+              {editingId === good.id ? (
+                <div className="button-group">
+                  <button
+                    onClick={() => saveEdit(good)}
+                    className="save icon-button"
+                    title="Gem ændringer"
+                  >
+                    <SaveLogo />
+                  </button>
+                  <button
+                    onClick={cancelEdit}
+                    className="cancel icon-button"
+                    title="Annuller"
+                  >
+                    <CancelLogo />
+                  </button>
+                </div>
+              ) : (
+                <div className="button-group">
+                  {loggedIn && (
+                    <>
+                      <button
+                        onClick={() => startEditing(good)}
+                        className="edit icon-button"
+                        title="Rediger vare"
+                      >
+                        <EditLogo />
+                      </button>
+                      <button
+                        onClick={() => confirmDelete(good.id)}
+                        className="delete icon-button"
+                        title="Slet vare"
+                      >
+                        <Trashcan />
+                      </button>
+                    </>
+                  )}
+                  <button
+                    onClick={() => addToShoppingList(good)}
+                    className="add-to-cart icon-button"
+                    title="Tilføj til indkøbskurv"
+                  >
+                    <Shoppingcart />
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      {filteredGoods.length === 0 && (
+        <div className="empty-state">
+          <div className="empty-state-icon">
+            {searchTerm ? '🔍' : '📦'}
+          </div>
+          <h3 className="empty-state-title">
+            {searchTerm ? 'Ingen resultater' : 'Ingen varer'}
+          </h3>
+          <p className="empty-state-description">
+            {searchTerm 
+              ? 'Ingen varer matcher din søgning. Prøv med et andet søgeord.' 
+              : 'Der er ingen varer tilgængelige endnu.'}
+          </p>
+        </div>
+      )}
     </div>
   );
 }
