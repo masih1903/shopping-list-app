@@ -701,7 +701,7 @@ button.logout-button:hover {
 
 .login-form img {
   max-width: 250px !important;
-  margin-bottom: 2rem;
+  margin-bottom: -7rem;
   transition: transform 0.2s ease, filter 0.2s ease;
 }
 

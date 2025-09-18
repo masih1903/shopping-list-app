@@ -23,8 +23,8 @@ function LogIn({ login, onCancel, loginError, clearError, resetToHome }) {
   return (
     <div className="login-form">
       <img
-        src="baeTechTransparentRedSmall.png"
-        alt="baeTech Logo"
+        src="mk3.png"
+        alt="MK3 Logo"
         onClick={resetToHome}
         style={{ cursor: 'pointer' }}
         title="Klik for at gå til forsiden"
