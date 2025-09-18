@@ -9,6 +9,11 @@ import { LoginIcon, LogoutIcon } from './Icons';
 const Header = ({ loggedIn, onLogin, onLogout, onResetToHome }) => {
   return (
     <div className="app-header">
+      <img
+        src="mk2.png"
+        alt="MK2 Icon"
+        className="header-icon-left"
+      />
       <div className="header-controls">
         <div className="auth-button">
           {!loggedIn ? (
