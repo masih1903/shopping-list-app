@@ -1,13 +1,5 @@
 import React from 'react';
 
-// Base Icon component with standard props
-const Icon = ({ size = 24, color = "currentColor", className = "", ...props }) => ({
-  size,
-  color,
-  className,
-  ...props
-});
-
 // Standardized icon components
 export const PlusIcon = ({ size = 24, color = "currentColor", className = "", ...props }) => (
   <svg 

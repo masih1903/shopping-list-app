@@ -15,7 +15,6 @@ const Button = ({
   title,
   ...props
 }) => {
-  const baseClasses = 'button-base';
   const variantClasses = {
     primary: 'add-to-cart',
     secondary: 'cancel',

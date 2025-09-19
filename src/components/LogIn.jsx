@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Button from "./Button";
+import { useTheme } from "../context/ThemeContext";
 
 function LogIn({ login, onCancel, loginError, clearError, resetToHome }) {
+  const { isDark } = useTheme();
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -23,8 +25,8 @@ function LogIn({ login, onCancel, loginError, clearError, resetToHome }) {
   return (
     <div className="login-form">
       <img
-        src="mk3.png"
-        alt="MK3 Logo"
+        src={isDark ? "mk3-transparent.png" : "mk-transparent.png"}
+        alt="MK Logo"
         onClick={resetToHome}
         style={{ cursor: 'pointer' }}
         title="Klik for at gå til forsiden"

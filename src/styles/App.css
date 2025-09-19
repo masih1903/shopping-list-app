@@ -108,8 +108,8 @@ body {
   position: absolute;
   top: 1rem;
   left: 1rem;
-  width: 32px;
-  height: 32px;
+  width: 60px;
+  height: 60px;
   cursor: pointer;
   transition: transform 0.2s ease, opacity 0.2s ease;
   z-index: 1000;
@@ -700,8 +700,8 @@ button.logout-button:hover {
 }
 
 .login-form img {
-  max-width: 250px !important;
-  margin-bottom: -7rem;
+  max-width: 200px !important;
+  margin-bottom: 0;
   transition: transform 0.2s ease, filter 0.2s ease;
 }
 
